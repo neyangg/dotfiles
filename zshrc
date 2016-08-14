@@ -1,5 +1,5 @@
 export EDITOR='vim'
-export PATH="$HOME/bin:$HOME/.bin:/usr/local/bin:/usr/local/sbin:$PATH"
+export PATH="/home/neyangg/anaconda3/bin/:$HOME/bin:$HOME/.bin:/usr/local/bin:/usr/local/sbin:$PATH"
 
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
@@ -12,11 +12,11 @@ ZSH=$HOME/.oh-my-zsh
 # My custom theme
 ZSH_THEME="brian"
 
-# ssh
-alias datbc="ssh -t brian@briancain.net"
-
 # Reload ZSH Config
 alias reload='. ~/.zshrc'
+
+# System
+alias df='df -h'
 
 # ls
 alias ls="ls -GF"
