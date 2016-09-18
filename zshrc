@@ -1,5 +1,8 @@
 export EDITOR='vim'
-export PATH="/home/neyangg/anaconda3/bin/:$HOME/bin:$HOME/.bin:/usr/local/bin:/usr/local/sbin:$PATH"
+export HADOOP_HOME="/home/neyangg/hadoop-2.7.3/"
+export JAVA_HOME="/usr/local/jdk1.7.0_79"
+export JRE_HOME="/usr/local/jdk1.7.0_79/jre"
+export PATH="/home/neyangg/anaconda3/bin/:$HOME/bin:$HOME/.bin:/usr/local/bin:/usr/local/sbin:$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin:/usr/local/jdk1.7.0_79/bin:/usr/local/jdk1.7.0_79/jre/bin"
 
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
@@ -17,6 +20,7 @@ alias reload='. ~/.zshrc'
 
 # System
 alias df='df -h'
+alias cls='clear'
 
 # ls
 alias ls="ls -GF"
@@ -29,8 +33,8 @@ alias tree="tree -Ca"
 # tmux
 alias tmux='tmux -2'
 
-# autojump
-alias j='autojump'
+# mysql
+alias sql=mysql -u root -p
 
 # VIM
 alias vi='vim'
