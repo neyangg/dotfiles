@@ -10,7 +10,6 @@ filetype off
 "-----------------------------------------------------------------------------
 
 " Setting up Vundle
-" Found here: http://www.erikzaadi.com/2012/03/19/auto-installing-vundle-from-your-vimrc/
 let has_vundle=1
 let vundle_readme=expand('~/.dotfiles/vim/bundle/vundle/README.md')
 if !filereadable(vundle_readme)
@@ -44,7 +43,7 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'tell-k/vim-autopep8'
 " Auto-completion stuff
-Bundle 'Valloric/YouCompleteMe'
+" Bundle 'Valloric/YouCompleteMe'
 " Airline
 Bundle 'bling/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
@@ -58,11 +57,12 @@ if has_vundle == 0
     :BundleInstall
 endif
 
+filetype plugin indent on
+
 "-----------------------------------------------------------------------------
 " Encoding and general usability
 "-----------------------------------------------------------------------------
 
-filetype plugin indent on
 syntax enable
 
 set encoding=utf-8
@@ -82,12 +82,15 @@ set backspace=indent,eol,start
 " If a file has been changed outside of Vim, reload it inside of Vim
 set autoread
 
+" enable os clipboard
+set  clipboard=unnamed
+
 " Color scheme
 if has('gui_running')
     set background=dark
     colorscheme solarized
 else
-    colorscheme molokai
+    colorscheme Zenburn
 endif
 
 "-----------------------------------------------------------------------------
@@ -96,14 +99,12 @@ endif
 
 nnoremap H ^
 nnoremap L $
-nnoremap gu gU
-nnoremap gl gu
 
 " inoremap jk <ESC>
-inoremap <C-k> <Up>
-inoremap <C-j> <Down>
-inoremap <C-h> <Left>
-inoremap <C-l> <Right>
+"inoremap <C-k> <Up>
+"inoremap <C-j> <Down>
+"inoremap <C-h> <Left>
+"inoremap <C-l> <Right>
 
 " 常规模式下输入 cS 清除行尾空格
 nmap cS :%s/\s\+$//g<CR>:noh<CR>
@@ -129,9 +130,9 @@ nnoremap gj j
 set splitbelow
 set splitright
 nnoremap <C-J> <C-W><C-J>
-nnoremap <c-K> <C-W><C-K>
+nnoremap <C-K> <C-W><C-K>
 nnoremap <C-H> <C-W><C-H>
-nnoremap <c-L> <C-W><C-L>
+nnoremap <C-L> <C-W><C-L>
 
 " Enable folding
 set foldmethod=indent
@@ -195,7 +196,7 @@ au BufRead,BufNewFile *.py,*.pyw match BadWhitespace /^\t\+/
 au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 
 " Wrap text after a certain number of characters
-au BufRead,BufNewFile *.py,*.pyw, set textwidth=100
+au BufRead,BufNewFile *.py,*.pyw, set textwidth=79
 
 " Use UNIX (\n) line endings.
 au BufNewFile *.py,*.pyw,*.c,*.h set fileformat=unix
@@ -205,17 +206,13 @@ au BufNewFile *.py,*.pyw,*.c,*.h set fileformat=unix
 "-----------------------------------------------------------------------------
 
 "按F5运行python"
-map <F5> :w<CR> :call RunPython()<CR>
+map <F5> :call RunPython()<CR>
 function RunPython()
-  let mp = &makeprg
-  let ef = &errorformat
-  let exeFile = expand("%:t")
-  setlocal makeprg=python\ -u
-  set efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m
-  silent make %
-  copen
-  let &makeprg = mp
-  let &errorformat = ef
+    exec "w"
+    if &filetype == 'python'
+        exec '!time python3 %'
+    elseif &filetype == 'html'
+        exec "!'google chrome' % &"
 endfunction
 
 "-----------------------------------------------------------------------------
@@ -223,7 +220,7 @@ endfunction
 "-----------------------------------------------------------------------------
 
 "custom keys
-let mapleader=";"
+let mapleader=","
 
 "-----------------------------------------------------------------------------
 " NerdTree
@@ -243,7 +240,14 @@ let NERDTreeWinSize=25
 " Airline tabs
 "-----------------------------------------------------------------------------
 
+let g:airline_theme = 'luna'
+
+let g:airline_powerline_fonts = 1
+
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#buffer_nr_show = 1
+
+set laststatus =2
 
 "-----------------------------------------------------------------------------
 " Indent line & autopep8
@@ -258,11 +262,10 @@ let g:autopep8_disable_show_diff=1
 "-----------------------------------------------------------------------------
 " nerdcommenter
 "-----------------------------------------------------------------------------
-let mapleader=','
 map <F4> <leader>ci <CR>
 
 "-----------------------------------------------------------------------------
-" Ctrl P
+ "Ctrl P
 "-----------------------------------------------------------------------------
 let g:ctrlp_map = '<c-p>'
 

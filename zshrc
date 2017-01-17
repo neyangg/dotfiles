@@ -1,8 +1,10 @@
 export EDITOR='vim'
-export HADOOP_HOME="/home/neyangg/hadoop-2.7.3/"
-export JAVA_HOME="/usr/local/jdk1.7.0_79"
-export JRE_HOME="/usr/local/jdk1.7.0_79/jre"
-export PATH="/home/neyangg/anaconda3/bin/:$HOME/bin:$HOME/.bin:/usr/local/bin:/usr/local/sbin:$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin:/usr/local/jdk1.7.0_79/bin:/usr/local/jdk1.7.0_79/jre/bin"
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+#export HADOOP_HOME="/Users/neyangg/hadoop-2.7.3/"
+#export JAVA_HOME="/usr/local/jdk1.7.0_79"
+#export JRE_HOME="/usr/local/jdk1.7.0_79/jre"
+export PATH="/Users/neyangg/anaconda/bin/:$HOME/bin:$HOME/.bin:/usr/local/bin:/usr/local/sbin:$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin:/usr/local/jdk1.7.0_79/bin:/usr/local/jdk1.7.0_79/jre/bin"
 
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
@@ -40,6 +42,9 @@ alias sql=mysql -u root -p
 alias vi='vim'
 alias vf='vim -f'
 
+# jupyter notebook
+alias jn='jupyter notebook'
+
 # git
 alias gl='git pull'
 alias glo='git pull origin master'
@@ -60,6 +65,8 @@ alias changelog='git log `git log -1 --format=%H -- CHANGELOG*`..; cat CHANGELOG
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git)
+plugins=(git z)
 
 source $ZSH/oh-my-zsh.sh
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
