@@ -44,6 +44,7 @@ Plugin 'jiangmiao/auto-pairs'
 Plugin 'tell-k/vim-autopep8'
 " Auto-completion stuff
 " Bundle 'Valloric/YouCompleteMe'
+Plugin 'davidhalter/jedi-vim'
 " Airline
 Bundle 'bling/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
@@ -213,6 +214,7 @@ function RunPython()
         exec '!time python3 %'
     elseif &filetype == 'html'
         exec "!'google chrome' % &"
+    endif
 endfunction
 
 "-----------------------------------------------------------------------------

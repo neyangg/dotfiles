@@ -1,10 +1,19 @@
 export EDITOR='vim'
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
-#export HADOOP_HOME="/Users/neyangg/hadoop-2.7.3/"
-#export JAVA_HOME="/usr/local/jdk1.7.0_79"
-#export JRE_HOME="/usr/local/jdk1.7.0_79/jre"
-export PATH="/Users/neyangg/anaconda/bin/:$HOME/bin:$HOME/.bin:/usr/local/bin:/usr/local/sbin:$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin:/usr/local/jdk1.7.0_79/bin:/usr/local/jdk1.7.0_79/jre/bin"
+
+# Path
+PATH=$PATH:$HOME/bin:$HOME/.bin:/usr/local/bin:/usr/local/sbin
+
+JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_111.jdk/Contents/Home
+JRE_HOME=$JAVA_HOME/jre
+CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+export JAVA_HOME
+export JRE_HOME
+export CLASSPATH
+
+PATH=$PATH:$JAVA_HOME/bin:/Users/neyangg/anaconda/bin:/usr/local/mysql/bin
+export PATH
 
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
@@ -36,7 +45,7 @@ alias tree="tree -Ca"
 alias tmux='tmux -2'
 
 # mysql
-alias sql=mysql -u root -p
+alias sql='mysql -u root -p'
 
 # VIM
 alias vi='vim'
