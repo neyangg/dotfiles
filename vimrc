@@ -64,6 +64,8 @@ filetype plugin indent on
 " Encoding and general usability
 "-----------------------------------------------------------------------------
 
+autocmd BufWritePost $MYVIMRC source $MYVIMRC
+
 syntax enable
 
 set encoding=utf-8
@@ -84,7 +86,7 @@ set backspace=indent,eol,start
 set autoread
 
 " enable os clipboard
-set  clipboard=unnamed
+set clipboard=unnamed
 
 " Color scheme
 if has('gui_running')
@@ -206,7 +208,7 @@ au BufNewFile *.py,*.pyw,*.c,*.h set fileformat=unix
 " Run
 "-----------------------------------------------------------------------------
 
-"按F5运行python"
+"按F5运行"
 map <F5> :call RunPython()<CR>
 function RunPython()
     exec "w"
@@ -214,6 +216,8 @@ function RunPython()
         exec '!time python3 %'
     elseif &filetype == 'html'
         exec "!'google chrome' % &"
+    elseif &filetype == 'sh'
+        exec '!bash %'
     endif
 endfunction
 
