@@ -1,13 +1,16 @@
 "-----------------------------------------------------------------------------
 " Vim Starter Configuration (Dotfiles)
+"
+" Project : .vimrc configuration for a starter
+" Last modified by Jerry Jia on 2017-04-09
 "-----------------------------------------------------------------------------
-
-set nocompatible
-filetype off
 
 "-----------------------------------------------------------------------------
 " Vundle Config
 "-----------------------------------------------------------------------------
+
+set nocompatible
+filetype off
 
 " Setting up Vundle
 let has_vundle=1
@@ -27,27 +30,36 @@ call vundle#rc()
 " Required Bundle
 Bundle 'gmarik/vundle'
 " Additional Bundles go here"
-"Color scheme
-Plugin 'jnurmine/Zenburn'
-Plugin 'altercation/vim-colors-solarized'
+" Color scheme
+Bundle 'jnurmine/Zenburn'
+Bundle 'altercation/vim-colors-solarized'
+Bundle 'sickill/vim-monokai'
 Bundle 'flazz/vim-colorschemes'
+" Word surround
+Bundle 'tpope/vim-surround'
 " Code folding
 Bundle 'tmhedberg/SimpylFold'
-Plugin 'Yggdroot/indentLine'
+" Indent line
+Bundle 'Yggdroot/indentLine'
 " Git interface
-Plugin 'tpope/vim-fugitive'
-" Fliesystem
-Plugin 'scrooloose/nerdtree'
-Plugin 'kien/ctrlp.vim'
+Bundle 'tpope/vim-fugitive'
+" Flie system
+Bundle 'scrooloose/nerdtree'
+Bundle 'kien/ctrlp.vim'
+" Show trailing white space
+Bundle 'bitc/vim-bad-whitespace'
 " Python syntax checker
-Plugin 'jiangmiao/auto-pairs'
-Plugin 'tell-k/vim-autopep8'
+Bundle 'scrooloose/syntastic'
+Bundle 'nvie/vim-flake8'
+Bundle 'jiangmiao/auto-pairs'
+Bundle 'tell-k/vim-autopep8'
 " Auto-completion stuff
 " Bundle 'Valloric/YouCompleteMe'
-Plugin 'davidhalter/jedi-vim'
+Bundle 'davidhalter/jedi-vim'
+"Bundle 'snipMate'
 " Airline
 Bundle 'bling/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
+Bundle 'vim-airline/vim-airline-themes'
 " Commenter
 Bundle 'scrooloose/nerdcommenter'
 " Installing plugins the first time
@@ -61,26 +73,39 @@ endif
 filetype plugin indent on
 
 "-----------------------------------------------------------------------------
-" Encoding and general usability
+" Color theme and outlook
 "-----------------------------------------------------------------------------
-
-autocmd BufWritePost $MYVIMRC source $MYVIMRC
-
-syntax enable
-
-set encoding=utf-8
-let &t_Co=256
 
 set shortmess=atI                                     "去掉欢迎界面
 " set gcr=a:blinkon0                                  "禁止光标闪烁
-set guicursor=i:block-iCursor-blinkon0,v:block-vCursor
+"set guicursor=i:block-iCursor-blinkon0,v:block-vCursor
 set cursorline                                        "突出显示当前行"
 
 " Line numbering
 set number
 
-" make backspaces more powerfull
-set backspace=indent,eol,start
+" Color scheme
+if has('gui_running')
+    set background=light
+    colorscheme solarized
+else
+    colorscheme monokai
+    "colorscheme solarized
+    set background=dark
+endif
+
+"-----------------------------------------------------------------------------
+" Encoding and general usability
+"-----------------------------------------------------------------------------
+
+set encoding=utf-8
+set fileencoding=utf-8
+set fileencodings=utf-8
+
+let &t_Co=256
+
+" auto source configuration when saving
+autocmd! BufWritePost $MYVIMRC source $MYVIMRC
 
 " If a file has been changed outside of Vim, reload it inside of Vim
 set autoread
@@ -88,13 +113,28 @@ set autoread
 " enable os clipboard
 set clipboard=unnamed
 
-" Color scheme
-if has('gui_running')
-    set background=dark
-    colorscheme solarized
-else
-    colorscheme Zenburn
-endif
+" make backspaces more powerfull
+set backspace=indent,eol,start
+
+set scrolloff=10
+
+"-----------------------------------------------------------------------------
+" Buffers
+"-----------------------------------------------------------------------------
+
+set writebackup
+set nobackup
+set noswapfile
+
+"-----------------------------------------------------------------------------
+" Spacing
+"-----------------------------------------------------------------------------
+
+set smartindent                                       "启用智能对齐方式
+set expandtab                                         "将Tab键转换为空格
+set tabstop=4                                         "设置Tab键的宽度
+set shiftwidth=4                                      "换行时自动缩进4个空格
+set smarttab                                          "指定按一次backspace就删除shiftwidth宽度的空格"
 
 "-----------------------------------------------------------------------------
 " Keymap stuff
@@ -140,7 +180,9 @@ nnoremap <C-L> <C-W><C-L>
 " Enable folding
 set foldmethod=indent
 set foldlevel=99
+
 nnoremap <space> za
+nnoremap <space> zo
 
 "-----------------------------------------------------------------------------
 " Search, highlight, spelling, etc.
@@ -155,22 +197,9 @@ set smartcase                                         "如果搜索模式包含�
 set noincsearch                                       "在输入要搜索的文字时，取消实时匹配"
 
 "-----------------------------------------------------------------------------
-" Spacing
+" Strip trailing white spaces
 "-----------------------------------------------------------------------------
 
-set smartindent                                       "启用智能对齐方式
-set expandtab                                         "将Tab键转换为空格
-set tabstop=4                                         "设置Tab键的宽度
-set shiftwidth=4                                      "换行时自动缩进4个空格
-set smarttab                                          "指定按一次backspace就删除shiftwidth宽度的空格"
-
-"-----------------------------------------------------------------------------
-" Buffers
-"-----------------------------------------------------------------------------
-
-set writebackup
-set nobackup
-set noswapfile
 
 "-----------------------------------------------------------------------------
 " Python syntax
@@ -185,7 +214,7 @@ au BufWinEnter * let w:m2=matchadd('Underlined', '\%>' . 80 . 'v.\+', -1)
 " PEP8 style
 au BufRead,BufNewFile *py,*pyw,*.c,*.h set tabstop=4
 
-"spaces for indents
+" spaces for indents
 au BufRead,BufNewFile *.py,*pyw set shiftwidth=4
 au BufRead,BufNewFile *.py,*.pyw set expandtab
 au BufRead,BufNewFile *.py set softtabstop=4
@@ -209,15 +238,15 @@ au BufNewFile *.py,*.pyw,*.c,*.h set fileformat=unix
 "-----------------------------------------------------------------------------
 
 "按F5运行"
-map <F5> :call RunPython()<CR>
-function RunPython()
+map <F5> :call RunScripts()<CR>
+function! RunScripts()
     exec "w"
     if &filetype == 'python'
         exec '!time python3 %'
     elseif &filetype == 'html'
         exec "!'google chrome' % &"
     elseif &filetype == 'sh'
-        exec '!bash %'
+        exec '!time bash %'
     endif
 endfunction
 
@@ -275,44 +304,3 @@ map <F4> <leader>ci <CR>
 "-----------------------------------------------------------------------------
 let g:ctrlp_map = '<c-p>'
 
-"-----------------------------------------------------------------------------
-" YCM
-"-----------------------------------------------------------------------------
-" youcompleteme  默认tab  s-tab 和自动补全冲突
-" let g:ycm_key_list_select_completion=['<c-n>']
-" let g:ycm_key_list_select_completion = ['<Down>']
-" let g:ycm_key_list_previous_completion=['<c-p>']
-" let g:ycm_key_list_previous_completion = ['<Up>']
-let g:ycm_confirm_extra_conf=0      " 关闭加载.ycm_extra_conf.py提示
-let g:ycm_complete_in_comments = 1  "在注释输入中也能补全
-let g:ycm_complete_in_strings = 1   "在字符串输入中也能补全
-let g:ycm_collect_identifiers_from_tags_files=1                 " 开启 YCM
-" 基于标签引擎
-let g:ycm_collect_identifiers_from_comments_and_strings = 1
-"注释和字符串中的文字也会被收入补全
-let g:ycm_seed_identifiers_with_syntax=1   "语言关键字补全,不过python关键字都很短，所以，需要的自己打开
-let g:ycm_collect_identifiers_from_tags_files = 1
-let g:ycm_min_num_of_chars_for_completion=2                     " 从第2个键入字符就开始罗列匹配项
-" 引入，可以补全系统，以及python的第三方包 针对新老版本YCM做了兼容
-" old version
-if !empty(glob("~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py"))
-    let g:ycm_global_ycm_extra_conf = "~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py"
-endif
-" new version
-if !empty(glob("~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"))
-    let g:ycm_global_ycm_extra_conf = "~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"
-endif
-
-"mapping
-nmap <leader>gd :YcmDiags<CR>
-nnoremap <leader>gl :YcmCompleter GoToDeclaration<CR>           "跳转到申明处
-nnoremap <leader>gf :YcmCompleter GoToDefinition<CR>            "跳转到定义处
-nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
-
-" 直接触发自动补全
-let g:ycm_key_invoke_completion = '<C-Space>'
-" 黑名单,不启用
-let g:ycm_filetype_blacklist = {
-      \ 'tagbar' : 1,
-      \ 'gitcommit' : 1,
-      \}

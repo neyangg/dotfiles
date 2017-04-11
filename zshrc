@@ -53,7 +53,7 @@ alias vf='vim -f'
 
 # jupyter notebook
 alias jn='jupyter notebook'
-
+alias sp='spyder'
 # git
 alias gl='git pull'
 alias glo='git pull origin master'
